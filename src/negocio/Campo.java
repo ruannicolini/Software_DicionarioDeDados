@@ -22,6 +22,10 @@ public class Campo {
         this.tipo = tipo;
         this.descricao = descricao;
     }
+    
+    public Campo(){
+    
+    }
 
     public int getId() {
         return id;
