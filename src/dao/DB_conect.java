@@ -17,10 +17,10 @@ public class DB_conect {
 
     public static Connection conexao = null;
     static final String DRIVER = "com.mysql.jdbc.Driver";
-    static final String DBNAME = "academia";
+    static final String DBNAME = "";
     static final String URL = "jdbc:mysql://localhost:3306/" + DBNAME;
-    static final String LOGIN = "root";
-    static final String SENHA = "Topasio";
+    static final String LOGIN = "";
+    static final String SENHA = "";
 
     /**
      * @throws java.lang.ClassNotFoundException
