@@ -22,6 +22,10 @@ public class Tabela {
         this.tipo = tipo;
         this.descricao = descricao;
     }
+    
+    public Tabela(){
+        
+    }
 
     public int getId() {
         return id;

@@ -20,6 +20,10 @@ public class BD {
         this.nome = nome;
         this.descricao = descricao;
     }
+    
+    public BD(){
+        
+    }
 
     public int getId() {
         return id;
