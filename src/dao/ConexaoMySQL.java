@@ -29,4 +29,13 @@ public class ConexaoMySQL {
         conexao = DriverManager.getConnection(url, login, senha);
         return conexao;                
     }
+    
+    static Connection obterConexao(String NomeBD) throws Exception, SQLException {
+        
+        String url = "jdbc:mysql://" + servidor + ":3306/" + NomeBD ;
+        
+        Class.forName("com.mysql.jdbc.Driver");
+        conexao = DriverManager.getConnection(url, login, senha);
+        return conexao;                
+    }
 }

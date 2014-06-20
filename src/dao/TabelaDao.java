@@ -9,67 +9,81 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import negocio.BD;
 import negocio.Tabela;
+
 
 /**
  *
- * @author Paulo
+ * @author Ruan
  */
-public class TabelaDao {
-    public void inserirTabela(Tabela tabela) throws ClassNotFoundException, SQLException {
-        if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
-        }
+public class TabelaDAO {
+    Statement stmt;
 
-        String sql = "INSERT INTO tabela (nome, tipo, descricao)VALUES (?,?,?) ";
-
-        PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        statement.setString(1, tabela.getNome());
-        statement.setString(2, tabela.getTipo());
-        statement.setString(3, tabela.getDescricao());
-
-        statement.execute();
-    }
-
-    public LinkedList consultarTabela() throws ClassNotFoundException, SQLException {
-        if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
-        }
-
-        LinkedList listaTabela = new LinkedList();
-        String sql = "SELECT * FROM tabela";
-        try (PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Tabela tabela = new Tabela();
- 
-                    tabela.setNome(resultSet.getString("nome"));
-                    tabela.setTipo(resultSet.getString("tipo"));
-                    tabela.setDescricao(resultSet.getString("descricao"));
-
-                    listaTabela.add(tabela);
-                }
-            }
-        }
-
-        return listaTabela;
+    public TabelaDAO() throws Exception, SQLException{
+         stmt = ConexaoMySQL.obterConexao().createStatement();
     }
     
-        public void AlterarTabela(Tabela tabela) throws SQLException, ClassNotFoundException{
+    public int inserir(Tabela tab) throws Exception, SQLException{
+        String sql = "INSERT INTO tabela (nome, tipo, idBD)VALUES (?,?,?) ";
         
-         if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
+        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql, PreparedStatement.RETURN_GENERATED_KEYS ) ;
+        pst.setString(1, tab.getNome() );
+        pst.setString(2, tab.getTipo() );
+        pst.setInt(3, tab.getIdBanco());
+        
+        pst.execute();
+        // Pegar ID gerado pelo campo AUTO NUMERAÇÃO
+        ResultSet rs = pst.getGeneratedKeys();
+        if ( rs.next() ) {
+            tab.setId( rs.getInt(1) );
         }
+        System.out.println("Tabela inserido no Dicionário de dados." ); 
         
-        String sql = "UPDATE tabela SET nome = ?, tipo = ? descricao = ? WHERE id = " + tabela.getId();
-      
-        PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        statement.setString(1, tabela.getNome());
-        statement.setString(2, tabela.getTipo());
-        statement.setString(3, tabela.getDescricao());
-      
-        statement.execute();
+        return tab.getId();
     }
-
+    
+    public void alterar(Tabela tab)  throws Exception, SQLException {
+        String sql = "UPDATE tabela SET nome = ?, descricao = ?, tipo = ? WHERE idTabela = " + tab.getId();
+        
+        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql ) ;
+        pst.setString(1, tab.getNome() );
+        pst.setString(2, tab.getDescricao() );
+        pst.setString(3, tab.getTipo() );        
+        pst.execute(); 
+    }
+    
+    
+    public List listarTabelas(BD bd) throws Exception, SQLException{
+        
+        stmt = ConexaoMySQL.obterConexao().createStatement();
+        ResultSet rs;
+        List lista = new ArrayList();
+        
+        // Consulta no banco
+        rs = stmt.executeQuery("select * from tabela where idBd = " + bd.getId());
+        
+        // Transformar RS em List
+        
+        while ( rs.next() ) {
+           int id = rs.getInt("idTabela");
+           String nome = rs.getString("nome");
+           String descricao = rs.getString("descricao");
+           String tipo = rs.getString("tipo");
+           int idBd = rs.getInt("idBd");
+           
+           Tabela tab = new Tabela(id, idBd, nome, tipo, descricao);
+           lista.add(tab);            
+        }
+        return lista;
+    }
+    
+    public void excluir (Tabela tab) throws Exception, SQLException {       
+        String sql = "DELETE FROM Tabela WHERE idTabela = " + tab.getId();
+        stmt.execute(sql);   
+    }
+    
 }

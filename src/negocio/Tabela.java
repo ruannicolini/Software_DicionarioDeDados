@@ -12,16 +12,31 @@ package negocio;
  */
 public class Tabela {
     int id;
+    int idBanco;
     String nome;
     String tipo;
     String descricao;
 
-    public Tabela(int id, String nome, String tipo, String descricao) {
+    public Tabela(int id, int idBanco, String nome, String tipo, String descricao) {
         this.id = id;
+        this.idBanco = idBanco;
         this.nome = nome;
         this.tipo = tipo;
         this.descricao = descricao;
     }
+
+    
+
+    
+    
+    public Tabela(String nome, String tipo) {
+        this.nome = nome;
+        this.tipo = tipo;
+    }
+
+    
+    
+    
     
     public Tabela(){
         
@@ -58,6 +73,22 @@ public class Tabela {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public int getIdBanco() {
+        return idBanco;
+    }
+
+    public void setIdBanco(int idBanco) {
+        this.idBanco = idBanco;
+    }
     
     
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
+    public Object[] toArray() {
+            return new Object[]{this};
+    }
 }

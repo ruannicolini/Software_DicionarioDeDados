@@ -3,83 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
 
+package dao;
 import java.sql.PreparedStatement;
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import negocio.BD;
+import negocio.Tabela;
 
 /**
  *
- * @author Paulo
+ * @author Ruan
  */
-public class BdDao {
+public class BdDAO {
     Statement stmt;
-    
-    public BdDao() throws Exception {
+    public BdDAO() throws Exception, SQLException{
         stmt = ConexaoMySQL.obterConexao().createStatement();
     }
-    
 
-    public void inserirBD(BD bd) throws ClassNotFoundException, SQLException {
-        if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
-        }
-
-        String sql = "INSERT INTO bd (nome, descricao)VALUES (?,?) ";
-
-        PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        statement.setString(1, bd.getNome());
-        statement.setString(2, bd.getDescricao());
-
-        statement.execute();
-    }
-
-    public LinkedList consultarBD() throws ClassNotFoundException, SQLException {
-        if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
-        }
-
-        LinkedList listaBD = new LinkedList();
-        String sql = "SELECT * FROM bd";
-        try (PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    BD bd = new BD();
-
-                    bd.setId(resultSet.getInt("id"));
-                    bd.setNome(resultSet.getString("nome"));
-                    bd.setDescricao(resultSet.getString("descricao"));
-
-                    listaBD.add(bd);
-                }
-            }
-        }
-
-        return listaBD;
-    }
-    
-        public void AlterarBD(BD bd) throws SQLException, ClassNotFoundException{
+    public List listarTodosBancos() throws Exception, SQLException{
         
-         if (DB_conect.conexao == null) {
-            DB_conect.OpenConnection();
-        }
-        
-        String sql = "UPDATE bd SET nome = ?, descricao = ? WHERE id = " + bd.getId();
-      
-        PreparedStatement statement = DB_conect.GetConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        statement.setString(1, bd.getNome());
-        statement.setString(2, bd.getDescricao());
-      
-        statement.execute();
-    }
-        
-    public List ConsultarTodosBD() throws SQLException, Exception{
         ResultSet rs;
         List lista = new ArrayList();
         
@@ -87,15 +33,76 @@ public class BdDao {
         rs = stmt.executeQuery("show databases");
         
         // Transformar RS em List
+        
         while ( rs.next() ) {
-           int id = rs.getInt(1);
-           String nome = rs.getString("DataBase");          
-           BD bd;
-            bd = new BD(nome);
+           String nome = rs.getString("DataBase");
+           BD bd = new BD(nome);
            lista.add(bd);            
-            
         }
         return lista;
-
     }
+    
+    public List listarBancosCadastrados() throws Exception, SQLException{
+        
+        ResultSet rs;
+        List lista = new ArrayList();
+        
+        // Consulta no banco
+        rs = stmt.executeQuery("select * from BD");
+        
+        // Transformar RS em List
+        
+        while ( rs.next() ) {
+           Integer id = rs.getInt("idBd");
+           String nome = rs.getString("Nome");
+           String descricao = rs.getString("Descricao");
+           BD bd = new BD(id, nome, descricao);
+           lista.add(bd);            
+        }
+        return lista;
+    }
+    
+    public List listarTabelas(String nomeBD) throws Exception, SQLException{
+        
+        stmt = ConexaoMySQL.obterConexao(nomeBD).createStatement();
+        ResultSet rs;
+        List lista = new ArrayList();
+        
+        // Consulta no banco
+        rs = stmt.executeQuery("show table status");
+        
+        // Transformar RS em List
+        
+        while ( rs.next() ) {
+           String nome = rs.getString("Name");
+           String tipo = rs.getString("Engine");
+           Tabela tab = new Tabela(nome, tipo);
+           lista.add(tab);            
+        }
+        return lista;
+    }
+    
+    public int inserir(BD bd) throws Exception, SQLException{
+        String sql = "INSERT INTO BD (nome, descricao)VALUES (?,?) ";
+        
+        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql, PreparedStatement.RETURN_GENERATED_KEYS ) ;
+        pst.setString(1, bd.getNome() );
+        pst.setString(2, bd.getDescricao() );
+        
+        pst.execute();
+        // Pegar ID gerado pelo campo AUTO NUMERAÇÃO
+        ResultSet rs = pst.getGeneratedKeys();
+        if ( rs.next() ) {
+            bd.setId( rs.getInt(1) );
+        }
+        System.out.println("Banco inserido para Dicionário de dados." ); 
+        
+        return bd.getId();
+    }
+    
+    public void excluir (BD bd) throws Exception, SQLException {       
+        String sql = "DELETE FROM BD WHERE idBd = " + bd.getId();
+        stmt.execute(sql);   
+    }
+    
 }

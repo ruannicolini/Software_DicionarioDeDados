@@ -6,17 +6,32 @@
 
 package visao;
 
+import controlador.Controlador;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import negocio.BD;
+
 /**
  *
  * @author Ruan
  */
 public class JanelaPrincipalFrame extends javax.swing.JFrame {
-
+    Controlador control;
     /**
-     * Creates new form Principal
+     * Creates new form JanelaPrincipalFrame
      */
     public JanelaPrincipalFrame() {
         initComponents();
+        
+        try {
+            control = new Controlador();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );     
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }
     }
 
     /**
@@ -28,23 +43,121 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnNovoDicionarioDeDados = new javax.swing.JButton();
+        btnDicionarioDeDados = new javax.swing.JButton();
+        btnExcluirDicionarioDeDados = new javax.swing.JButton();
+        jPanelBD = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        cmbDB = new javax.swing.JComboBox();
+        jButton5 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciamento de Dicionário de Dados");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
-        jMenu1.setText("Novo");
+        btnNovoDicionarioDeDados.setText("NOVO DICIONARIO DE DADOS");
+        btnNovoDicionarioDeDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoDicionarioDeDadosActionPerformed(evt);
+            }
+        });
+
+        btnDicionarioDeDados.setText("DICIONARIO DE DADOS");
+        btnDicionarioDeDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDicionarioDeDadosActionPerformed(evt);
+            }
+        });
+
+        btnExcluirDicionarioDeDados.setText("EXCLUIR DICIONARIO DE DADOS");
+        btnExcluirDicionarioDeDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirDicionarioDeDadosActionPerformed(evt);
+            }
+        });
+
+        jPanelBD.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanelBDComponentShown(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Banco de Dados:"));
+
+        cmbDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+        cmbDB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDBItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cmbDB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(cmbDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jButton5.setText("Prosseguir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelBDLayout = new javax.swing.GroupLayout(jPanelBD);
+        jPanelBD.setLayout(jPanelBDLayout);
+        jPanelBDLayout.setHorizontalGroup(
+            jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBDLayout.createSequentialGroup()
+                .addContainerGap(199, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanelBDLayout.setVerticalGroup(
+            jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBDLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jMenu1.setText("Dicionário de Dados");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem1.setText("Banco de Dados");
+        jMenuItem1.setText("Controle de BD");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem2.setText("Dicionário de Dados");
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -57,11 +170,29 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 673, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNovoDicionarioDeDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDicionarioDeDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcluirDicionarioDeDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanelBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 321, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnNovoDicionarioDeDados, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDicionarioDeDados, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluirDicionarioDeDados, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -69,9 +200,105 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        JanelaBDNovo janelaBDnovo = new JanelaBDNovo(this, true);
-        janelaBDnovo.setVisible(true);
+        
+        JanelaBDNovo janelaBdNovo;
+        janelaBdNovo = new JanelaBDNovo(this, true);
+        janelaBdNovo.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnNovoDicionarioDeDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDicionarioDeDadosActionPerformed
+        // TODO add your handling code here:
+        btnExcluirDicionarioDeDados.setSelected(false);
+        btnDicionarioDeDados.setSelected(false);
+        btnNovoDicionarioDeDados.setSelected(true);
+        
+        jPanelBD.setVisible(false);
+        JanelaBDNovo janelaBdNovo;
+        janelaBdNovo = new JanelaBDNovo(this, true);
+        janelaBdNovo.setVisible(true);
+    }//GEN-LAST:event_btnNovoDicionarioDeDadosActionPerformed
+
+    private void cmbDBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDBItemStateChanged
+
+    }//GEN-LAST:event_cmbDBItemStateChanged
+
+    private void btnDicionarioDeDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDicionarioDeDadosActionPerformed
+        // TODO add your handling code here:
+        btnExcluirDicionarioDeDados.setSelected(false);
+        btnNovoDicionarioDeDados.setSelected(false);
+        btnDicionarioDeDados.setSelected(true);
+        
+        jPanelBD.setVisible(true);
+    }//GEN-LAST:event_btnDicionarioDeDadosActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        jPanelBD.setVisible(false);
+    }//GEN-LAST:event_formComponentShown
+
+    private void btnExcluirDicionarioDeDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirDicionarioDeDadosActionPerformed
+        // TODO add your handling code here:
+        btnNovoDicionarioDeDados.setSelected(false);
+        btnDicionarioDeDados.setSelected(false);
+        btnExcluirDicionarioDeDados.setSelected(true);
+        
+        jPanelBD.setVisible(true);
+    }//GEN-LAST:event_btnExcluirDicionarioDeDadosActionPerformed
+
+    private void jPanelBDComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanelBDComponentShown
+        // TODO add your handling code here:
+        try {        
+            control.carregarComboBDdoBancoDicionario(cmbDB);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(this, "Erro ao consultar Bancos de Dados. " + 
+                    erro.getMessage() + erro.getClass() );            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, "Erro não esperado ao consultar Bancos. " + 
+                    erro.getMessage() + erro.getClass() );
+        }
+    }//GEN-LAST:event_jPanelBDComponentShown
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        BD bd;
+        if(btnDicionarioDeDados.isSelected()){
+            if(cmbDB.getSelectedItem() != null){
+                    bd =  (BD)cmbDB.getSelectedItem();
+
+                    JanelaTabelasDescricaoDialog janela;
+                    janela = new JanelaTabelasDescricaoDialog(null, true, bd);
+                    janela.setVisible(true);
+
+           }else{
+                    JOptionPane.showMessageDialog(this, "Selecione Algum BD.");
+            }
+        }else{
+            if(btnExcluirDicionarioDeDados.isSelected()){
+                if(cmbDB.getSelectedItem() != null){
+                    bd =  (BD)cmbDB.getSelectedItem();
+
+                    try {
+                        control.excluirBDdoBancoDicionario(bd);
+                        JOptionPane.showMessageDialog(this, " Dicionário de Dados do Banco "+ bd.getNome()+ " encluído com sucesso! ");
+
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(this, "Erro no banco de Dados ao excluir BD. "
+                                + erro.getMessage() + erro.getClass());
+                    } catch (Exception erro) {
+                        JOptionPane.showMessageDialog(this, "Erro não esperado ao excluir Banco. "
+                                + erro.getMessage() + erro.getClass());
+                    }
+                    
+                    jPanelBD.setVisible(false);
+                    jPanelBD.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Selecione Algum BD.");
+                }
+                
+                
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,9 +336,17 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDicionarioDeDados;
+    private javax.swing.JButton btnExcluirDicionarioDeDados;
+    private javax.swing.JButton btnNovoDicionarioDeDados;
+    private javax.swing.JComboBox cmbDB;
+    private javax.swing.JButton jButton5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelBD;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,6 +28,13 @@ public class BD {
     public BD(String nome) {
         this.nome = nome;
     }
+
+    
+
+    public BD(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
     
 
     public int getId() {
@@ -52,6 +59,14 @@ public class BD {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
+    public Object[] toArray() {
+            return new Object[]{this};
     }
     
 }
