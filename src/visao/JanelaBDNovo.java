@@ -7,6 +7,8 @@
 package visao;
 
 import controlador.Controlador;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +19,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
     /**
      * Creates new form JanelaBDNovo
      */
-    public JanelaBDNovo(java.awt.Frame parent, boolean modal) {
+    public JanelaBDNovo(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
         control = new Controlador();
@@ -178,8 +180,12 @@ public class JanelaBDNovo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-        control.listarBancos(cmbBancos);
+        try {
+            // TODO add your handling code here:
+            control.listarBancos(cmbBancos);
+        } catch (Exception ex) {
+            Logger.getLogger(JanelaBDNovo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formComponentShown
 
     /**
@@ -212,7 +218,12 @@ public class JanelaBDNovo extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JanelaBDNovo dialog = new JanelaBDNovo(new javax.swing.JFrame(), true);
+                JanelaBDNovo dialog;
+                try {
+                    dialog = new JanelaBDNovo(new javax.swing.JFrame(), true);
+                } catch (Exception ex) {
+                    Logger.getLogger(JanelaBDNovo.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -6,19 +6,26 @@
 
 package controlador;
 
+import dao.BdDao;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import negocio.BD;
 
 /**
  *
  * @author Ruan
  */
 public class Controlador {
-
-    public Controlador() {
+    BdDao bdDao;
+    public Controlador() throws Exception, SQLException  {
+        bdDao = new BdDao();
     }
     
-    public void listarBancos(JComboBox cmb){
-        
+    public void listarBancos(JComboBox combo) throws SQLException, Exception{
+        List<BD> lista = bdDao.ConsultarTodosBD();
+        combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
     
 }

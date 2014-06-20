@@ -8,7 +8,10 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import negocio.BD;
 
 /**
@@ -16,6 +19,12 @@ import negocio.BD;
  * @author Paulo
  */
 public class BdDao {
+    Statement stmt;
+    
+    public BdDao() throws Exception {
+        stmt = ConexaoMySQL.obterConexao().createStatement();
+    }
+    
 
     public void inserirBD(BD bd) throws ClassNotFoundException, SQLException {
         if (DB_conect.conexao == null) {
@@ -69,5 +78,24 @@ public class BdDao {
       
         statement.execute();
     }
+        
+    public List ConsultarTodosBD() throws SQLException, Exception{
+        ResultSet rs;
+        List lista = new ArrayList();
+        
+        // Consulta no banco
+        rs = stmt.executeQuery("show databases");
+        
+        // Transformar RS em List
+        while ( rs.next() ) {
+           int id = rs.getInt(1);
+           String nome = rs.getString("DataBase");          
+           BD bd;
+            bd = new BD(nome);
+           lista.add(bd);            
+            
+        }
+        return lista;
 
+    }
 }
