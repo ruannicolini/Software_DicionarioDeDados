@@ -50,11 +50,6 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         cmbDB = new javax.swing.JComboBox();
         jButton5 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Dicionário de Dados");
@@ -144,28 +139,6 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Dicionário de Dados");
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem1.setText("Controle de BD");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem2.setText("Dicionário de Dados");
-        jMenu1.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,14 +170,6 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        
-        JanelaBDNovo janelaBdNovo;
-        janelaBdNovo = new JanelaBDNovo(this, true);
-        janelaBdNovo.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnNovoDicionarioDeDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDicionarioDeDadosActionPerformed
         // TODO add your handling code here:
@@ -341,11 +306,6 @@ public class JanelaPrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnNovoDicionarioDeDados;
     private javax.swing.JComboBox cmbDB;
     private javax.swing.JButton jButton5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBD;
     // End of variables declaration//GEN-END:variables

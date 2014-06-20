@@ -148,7 +148,8 @@ public class Controlador {
 //        return 0;
 //    }
     public List getListaBancosCadastrados() throws Exception, SQLException{
-        return bdDAO.listarBancosCadastrados();
+        List<BD> lista = bdDAO.listarBancosCadastrados();
+        return lista;
     }
     
 }

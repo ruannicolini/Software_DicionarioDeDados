@@ -43,7 +43,7 @@ public class BdDAO {
     }
     
     public List listarBancosCadastrados() throws Exception, SQLException{
-        
+        stmt = ConexaoMySQL.obterConexao().createStatement();
         ResultSet rs;
         List lista = new ArrayList();
         

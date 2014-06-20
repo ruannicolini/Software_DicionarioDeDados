@@ -57,13 +57,13 @@ public class JanelaBDNovo extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chkSelecionarTodasTabelas = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jtbTabelas = new javax.swing.JTable();
+        tblTabelas = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jtbTabelasSelecionadas = new javax.swing.JTable();
+        tblTabelasSelecionadas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
@@ -125,11 +125,16 @@ public class JanelaBDNovo extends javax.swing.JDialog {
             }
         });
 
-        jCheckBox1.setText("Incluir Todas as Tabelas");
+        chkSelecionarTodasTabelas.setText("Incluir Todas as Tabelas");
+        chkSelecionarTodasTabelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkSelecionarTodasTabelasActionPerformed(evt);
+            }
+        });
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jtbTabelas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTabelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -145,13 +150,13 @@ public class JanelaBDNovo extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jtbTabelas);
+        jScrollPane4.setViewportView(tblTabelas);
 
         jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
 
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jtbTabelasSelecionadas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTabelasSelecionadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -167,7 +172,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jtbTabelasSelecionadas);
+        jScrollPane5.setViewportView(tblTabelasSelecionadas);
 
         jLabel1.setText("Tabelas Selecionadas");
 
@@ -184,7 +189,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
                             .addComponent(jButton2)))
-                    .addComponent(jCheckBox1))
+                    .addComponent(chkSelecionarTodasTabelas))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -200,7 +205,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
+                    .addComponent(chkSelecionarTodasTabelas)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
@@ -303,15 +308,15 @@ public class JanelaBDNovo extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         //Limpa Tabela Itens de produtos
-        DefaultTableModel tableModel = (DefaultTableModel) jtbTabelas.getModel();
+        DefaultTableModel tableModel = (DefaultTableModel) tblTabelas.getModel();
         tableModel.setNumRows(0);
         //Limpa Tabela de produtos Selecionados
-        DefaultTableModel tableModel2 = (DefaultTableModel) jtbTabelasSelecionadas.getModel();
+        DefaultTableModel tableModel2 = (DefaultTableModel) tblTabelasSelecionadas.getModel();
         tableModel2.setNumRows(0);
         
         
         try{
-              control.consultarTabelas(jtbTabelas,cmbDB.getSelectedItem().toString());
+              control.consultarTabelas(tblTabelas,cmbDB.getSelectedItem().toString());
         } catch (SQLException erro) {
               JOptionPane.showMessageDialog(this, "Erro ao consultar ]tabelas. " + 
                       erro.getMessage() + erro.getClass() );            
@@ -323,32 +328,32 @@ public class JanelaBDNovo extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int linh = jtbTabelas.getSelectedRow();
+        int linh = tblTabelas.getSelectedRow();
         if (linh >= 0) {
-                              Object teste = jtbTabelas.getValueAt(linh, 0);
+                              Object teste = tblTabelas.getValueAt(linh, 0);
                               Tabela tab = (Tabela) teste;
                                
-                              ((DefaultTableModel) jtbTabelasSelecionadas.getModel()).addRow(tab.toArray());
-                              int lastLine = jtbTabelasSelecionadas.getRowCount() - 1;
+                              ((DefaultTableModel) tblTabelasSelecionadas.getModel()).addRow(tab.toArray());
+                              //int lastLine = jtbTabelasSelecionadas.getRowCount() - 1;
                               
                               //Remove o produto Selecionado da tabela de Pesquisa
-                              ((DefaultTableModel) jtbTabelas.getModel()).removeRow(linh);
+                              ((DefaultTableModel) tblTabelas.getModel()).removeRow(linh);
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int linh = jtbTabelasSelecionadas.getSelectedRow();
+        int linh = tblTabelasSelecionadas.getSelectedRow();
         if (linh >= 0) {
-                              Object teste = jtbTabelasSelecionadas.getValueAt(linh, 0);
+                              Object teste = tblTabelasSelecionadas.getValueAt(linh, 0);
                               Tabela tab = (Tabela) teste;
                                
-                              ((DefaultTableModel) jtbTabelas.getModel()).addRow(tab.toArray());
-                              int lastLine = jtbTabelas.getRowCount() - 1;
+                              ((DefaultTableModel) tblTabelas.getModel()).addRow(tab.toArray());
+                              //int lastLine = jtbTabelas.getRowCount() - 1;
                               
                               //Remove o produto Selecionado da tabela de Pesquisa
-                              ((DefaultTableModel) jtbTabelasSelecionadas.getModel()).removeRow(linh);
+                              ((DefaultTableModel) tblTabelasSelecionadas.getModel()).removeRow(linh);
             
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -368,7 +373,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
         
         
         try {
-            if(jtbTabelasSelecionadas.getRowCount() != 0){
+            if(tblTabelasSelecionadas.getRowCount() != 0){
                 bd =  (BD)cmbDB.getSelectedItem();
                 bd.setDescricao(textDescricao.getText());
                 
@@ -378,7 +383,7 @@ public class JanelaBDNovo extends javax.swing.JDialog {
                     }
                 }
                 if(verificador == 0){
-                    int id = control.CriarBD(bd, jtbTabelasSelecionadas);
+                    int id = control.CriarBD(bd, tblTabelasSelecionadas);
                     bd.setId(id);
                     
                     JanelaTabelasDescricaoDialog janela;
@@ -398,6 +403,19 @@ public class JanelaBDNovo extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void chkSelecionarTodasTabelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkSelecionarTodasTabelasActionPerformed
+        // TODO add your handling code here:
+        for(int i =0; i< tblTabelas.getRowCount(); i++){
+                              Tabela tab = (Tabela)  tblTabelas.getValueAt(i, 0);
+                               
+                              ((DefaultTableModel) tblTabelasSelecionadas.getModel()).addRow(tab.toArray());
+                              //int lastLine = jtbTabelas.getRowCount() - 1;
+        }
+        //Limpa Tabela 
+        DefaultTableModel tableModel = (DefaultTableModel) tblTabelas.getModel();
+        tableModel.setNumRows(0);
+    }//GEN-LAST:event_chkSelecionarTodasTabelasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -443,11 +461,11 @@ public class JanelaBDNovo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JCheckBox chkSelecionarTodasTabelas;
     private javax.swing.JComboBox cmbDB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -458,8 +476,8 @@ public class JanelaBDNovo extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jtbTabelas;
-    private javax.swing.JTable jtbTabelasSelecionadas;
+    private javax.swing.JTable tblTabelas;
+    private javax.swing.JTable tblTabelasSelecionadas;
     private javax.swing.JTextArea textDescricao;
     // End of variables declaration//GEN-END:variables
 }
